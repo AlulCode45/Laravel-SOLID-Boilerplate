@@ -4,9 +4,15 @@ namespace App\Repositories;
 
 use App\Contracts\Repositories\UserRepositoryInterface;
 use App\Models\User;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 class EloquentUserRepository implements UserRepositoryInterface
 {
+    public function paginate(int $perPage = 15): LengthAwarePaginator
+    {
+        return User::query()->paginate($perPage);
+    }
+
     public function findById(int $id): ?User
     {
         return User::query()->find($id);

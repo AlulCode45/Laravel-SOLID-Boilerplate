@@ -5,11 +5,17 @@ namespace App\Services;
 use App\Contracts\Interfaces\UserServiceInterface;
 use App\Contracts\Repositories\UserRepositoryInterface;
 use App\Models\User;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 class UserService implements UserServiceInterface
 {
     public function __construct(private UserRepositoryInterface $users)
     {
+    }
+
+    public function paginate(int $perPage = 15): LengthAwarePaginator
+    {
+        return $this->users->paginate($perPage);
     }
 
     public function getById(int $id): ?User
